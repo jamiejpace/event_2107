@@ -16,4 +16,27 @@ class Event
       food_truck.name
     end
   end
+
+  def food_trucks_that_sell(item)
+    @food_trucks.find_all do |food_truck|
+      food_truck.inventory.include?(item)
+    end
+  end
+
+  def total_inventory
+    inventory = {}
+    @food_trucks.each do |food_truck|
+      food_truck.inventory.each do |item, quantity|
+        trucks_with_item = @food_trucks.find_all do |food_truck|
+          food_truck.inventory.include?(item)
+        end
+        if inventory[item].nil?
+          inventory[item] = {:quantity => quantity, :food_trucks => trucks_with_item}
+        else
+          inventory[item][:quantity] += quantity
+        end
+      end
+    end
+    inventory
+  end
 end
