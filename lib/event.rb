@@ -39,4 +39,14 @@ class Event
     end
     inventory
   end
+
+  def overstocked_items
+    overstocked = []
+    total_inventory.values.each do |value|
+      if value[:quantity] > 50 && value[:food_trucks].length > 1
+        overstocked << total_inventory.key(value)
+      end
+    end
+    overstocked
+  end
 end
