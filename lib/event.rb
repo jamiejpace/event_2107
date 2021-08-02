@@ -49,4 +49,12 @@ class Event
     end
     overstocked
   end
+
+  def sorted_item_list
+    @food_trucks.flat_map do |truck|
+      truck.inventory.keys.flat_map do |item|
+        item.name
+      end
+    end.uniq.sort
+  end
 end
